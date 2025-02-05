@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Deret Aritmatika dan Geometri</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Kalkulator Deret Aritmatika dan Geometri</h1>
+        
+        <form method="POST">
+            <label for="deret_type">Pilih Jenis Deret:</label>
+            <select name="deret_type" required>
+                <option value="aritmatika">Deret Aritmatika</option>
+                <option value="geometri">Deret Geometri</option>
+            </select>
+            
+            <label for="a">Suku Pertama (a):</label>
+            <input type="number" step="any" name="a" required>
+            
+            <label for="n">Jumlah Suku (n):</label>
+            <input type="number" name="n" required>
+
+            <!-- Input untuk Deret Aritmatika -->
+            <div id="aritmatika_input" style="display: none;">
+                <label for="b">Beda (b):</label>
+                <input type="number" step="any" name="b">
+            </div>
+            
+            <!-- Input untuk Deret Geometri -->
+            <div id="geometri_input" style="display: none;">
+                <label for="r">Rasio (r):</label>
+                <input type="number" step="any" name="r">
+            </div>
+
+            <button type="submit">Hitung</button>
+        </form>
+
+        {% if suku_n is not none %}
+            <h2>Hasil:</h2>
+            <p>Suku ke-{{ n }} deret {{ deret_type }} adalah: {{ suku_n }}</p>
+            <p>Jumlah {{ n }} suku pertama deret {{ deret_type }} adalah: {{ jumlah_n }}</p>
+        {% endif %}
+    </div>
+
+    <script>
+        // Mengubah input yang ditampilkan berdasarkan pilihan deret
+        const deretType = document.querySelector('select[name="deret_type"]');
+        const aritmatikaInput = document.getElementById("aritmatika_input");
+        const geometriInput = document.getElementById("geometri_input");
+
+        deretType.addEventListener('change', function() {
+            if (deretType.value == "aritmatika") {
+                aritmatikaInput.style.display = "block";
+                geometriInput.style.display = "none";
+            } else {
+                aritmatikaInput.style.display = "none";
+                geometriInput.style.display = "block";
+            }
+        });
+        deretType.dispatchEvent(new Event('change'));
+    </script>
+</body>
+</html>
